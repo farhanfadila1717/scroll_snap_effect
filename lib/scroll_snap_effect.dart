@@ -1,5 +1,3 @@
-library scroll_snap_effect;
-
 import 'package:flutter/material.dart';
 
 class ScrollSnapEffect extends StatefulWidget {
@@ -8,6 +6,7 @@ class ScrollSnapEffect extends StatefulWidget {
     required this.itemSize,
     required this.itemCount,
     required this.itemBuilder,
+    this.physics,
     this.padding,
     this.clipBehavior = Clip.hardEdge,
     this.onChanged,
@@ -18,6 +17,7 @@ class ScrollSnapEffect extends StatefulWidget {
   final double itemSize;
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
+  final ScrollPhysics? physics;
   final EdgeInsetsGeometry? padding;
   final Clip clipBehavior;
   final ValueChanged<int>? onChanged;
@@ -30,7 +30,6 @@ class ScrollSnapEffect extends StatefulWidget {
 
 class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
   late final ScrollController _controller;
-  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -38,7 +37,9 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
     super.initState();
   }
 
-  bool onNotification(ScrollNotification? scrollNotification) {
+  bool onNotification(
+    ScrollNotification? scrollNotification,
+  ) {
     if (scrollNotification == null) {
       return false;
     }
@@ -47,41 +48,42 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
       if (scrollNotification.metrics.axis == Axis.horizontal) {
         final offset = _controller.offset;
         correctIndex(offset);
-
         return true;
       }
     }
     return false;
   }
 
-  void correctIndex(double offset) {
+  void correctIndex(
+    double offset,
+  ) {
     int index = offset ~/ widget.itemSize;
     final modIndex = offset % widget.itemSize;
     final halfWidth = widget.itemSize / 2;
+    final maxOffset = _controller.position.maxScrollExtent;
     if (modIndex > halfWidth && index != widget.itemCount - 1) {
       index += 1;
     }
     final itemIndexOffet = widget.itemSize * index;
-    if (itemIndexOffet != offset) {
-      if (_currentIndex == index && _currentIndex == widget.itemCount - 1) {
-        return;
-      }
+    if (itemIndexOffet != offset && offset != maxOffset) {
       Future.delayed(const Duration(milliseconds: 100), () {
         correctScrollOffset(index, itemIndexOffet);
       });
     }
   }
 
-  void correctScrollOffset(int index, double offset) async {
+  void correctScrollOffset(
+    int index,
+    double offset,
+  ) async {
     await _controller.animateTo(
       offset,
-      duration: widget.duration ?? const Duration(milliseconds: 500),
+      duration: widget.duration ?? const Duration(milliseconds: 200),
       curve: widget.curve ?? Curves.fastOutSlowIn,
     );
     if (widget.onChanged != null) {
       widget.onChanged!(index);
     }
-    _currentIndex = index;
   }
 
   @override
@@ -97,6 +99,7 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
       child: ListView.builder(
         controller: _controller,
         scrollDirection: Axis.horizontal,
+        physics: widget.physics,
         padding: widget.padding,
         itemCount: widget.itemCount,
         itemBuilder: widget.itemBuilder,
