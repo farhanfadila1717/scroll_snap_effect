@@ -1,3 +1,5 @@
-## 0.0.1
+## 0.0.2
+* Fix animate to last index
 
-* TODO: Initial release.
+## 0.0.1
+* Initial release.
