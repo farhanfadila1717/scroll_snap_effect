@@ -1,8 +1,10 @@
-## Scroll Snap Effect
+## [![cover][]][pubdev]
 [![flutter][]][web flutter] [![paypal][]][paypal account] <br>
-A Flutter package to create easy scroll snap effect 
+A Flutter package to create easy animation scroll snap effect in ListView
 
 ---
+
+
 
 ```dart
   // Example itemSize
@@ -41,6 +43,11 @@ A Flutter package to create easy scroll snap effect
 
 ---
 
+### Example Scroll Snap Effect
+[![output][]][output]
+
+---
+
 ### 🚧 Maintener 
 [![account avatar][]][github account] <br>
 **Farhan Fadila**<br>
@@ -49,6 +56,8 @@ A Flutter package to create easy scroll snap effect
 ### ❤️ Suport Maintener
 [![paypal][]][paypal account] [![badge linktree][]][linktree account]
 
+[cover]: https://github.com/farhanfadila1717/flutter_package/blob/master/display/scroll_snap_effect/scroll_snap_effect.png
+[output]: https://github.com/farhanfadila1717/flutter_package/blob/master/display/scroll_snap_effect/scroll_snap_effect.gif
 [flutter]: https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter
 [web flutter]: https://flutter.dev
 [paypal]: https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal
@@ -58,3 +67,4 @@ A Flutter package to create easy scroll snap effect
 [badge linktree]: https://img.shields.io/badge/Linktree-farhanfadila-orange
 [linktree account]: https://linktr.ee/farhanfadila
 [github]: https://github.com/farhanfadila1717/card_loading
+[pubdev]: https://pub.dev/packages/scroll_snap_effect
