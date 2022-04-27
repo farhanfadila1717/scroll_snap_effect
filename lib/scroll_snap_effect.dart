@@ -6,6 +6,7 @@ class ScrollSnapEffect extends StatefulWidget {
     required this.itemSize,
     required this.itemCount,
     required this.itemBuilder,
+    this.controller,
     this.physics,
     this.padding,
     this.clipBehavior = Clip.hardEdge,
@@ -17,6 +18,7 @@ class ScrollSnapEffect extends StatefulWidget {
   final double itemSize;
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
+  final ScrollController? controller;
   final ScrollPhysics? physics;
   final EdgeInsetsGeometry? padding;
   final Clip clipBehavior;
@@ -33,7 +35,7 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
 
   @override
   void initState() {
-    _controller = ScrollController();
+    _controller = widget.controller ?? ScrollController();
     super.initState();
   }
 
@@ -84,12 +86,6 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
     if (widget.onChanged != null) {
       widget.onChanged!(index);
     }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
