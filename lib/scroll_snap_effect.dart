@@ -6,6 +6,7 @@ class ScrollSnapEffect extends StatefulWidget {
     required this.itemSize,
     required this.itemCount,
     required this.itemBuilder,
+    this.scrollDirection = Axis.horizontal,
     this.physics,
     this.padding,
     this.clipBehavior = Clip.hardEdge,
@@ -16,6 +17,7 @@ class ScrollSnapEffect extends StatefulWidget {
 
   final double itemSize;
   final int itemCount;
+  final Axis scrollDirection;
   final IndexedWidgetBuilder itemBuilder;
   final ScrollPhysics? physics;
   final EdgeInsetsGeometry? padding;
@@ -45,11 +47,9 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
     }
 
     if (scrollNotification is ScrollEndNotification) {
-      if (scrollNotification.metrics.axis == Axis.horizontal) {
-        final offset = _controller.offset;
-        correctIndex(offset);
-        return true;
-      }
+      final offset = _controller.offset;
+      correctIndex(offset);
+      return true;
     }
     return false;
   }
@@ -78,7 +78,7 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
   ) async {
     await _controller.animateTo(
       offset,
-      duration: widget.duration ?? const Duration(milliseconds: 200),
+      duration: widget.duration ?? const Duration(milliseconds: 150),
       curve: widget.curve ?? Curves.fastOutSlowIn,
     );
     if (widget.onChanged != null) {
@@ -98,7 +98,7 @@ class _ScrollSnapEffectState extends State<ScrollSnapEffect> {
       onNotification: onNotification,
       child: ListView.builder(
         controller: _controller,
-        scrollDirection: Axis.horizontal,
+        scrollDirection: widget.scrollDirection,
         physics: widget.physics,
         padding: widget.padding,
         itemCount: widget.itemCount,

@@ -1,3 +1,6 @@
+## 0.1.0
+* Added: Support vertical axis direction 
+
 ## 0.0.2
 * Fix animate to last index
 
